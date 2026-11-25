@@ -38,12 +38,14 @@ docker buildx build --platform linux/amd64,linux/arm64 -t <你的镜像名>:late
 
 | 文件 | 作用 |
 |---|---|
-| `Dockerfile` | 镜像构建定义（含 config 合并阶段） |
+| `Dockerfile` | 镜像构建定义（含 config 合并与 httpd 主配置生成阶段） |
 | `docker-compose.yml` | 一键部署编排 |
 | `.dockerignore` | 构建上下文排除项 |
-| `httpd.conf` | BusyBox httpd MIME 补充（`.wasm` 等，镜像自动生效且禁止外部访问） |
+| `httpd.conf` | BusyBox httpd MIME 补充（`.wasm` 等）；构建时据此生成 `/etc/httpd.conf` 主配置，用于 `404.html` |
 | `config-docker.json` | **运行时配置覆盖层**，见下 |
 | `.github/workflows/docker-release.yml` | 手动构建并发布 Release 的 workflow，见下 |
+
+缺失路径会返回站点自带的 `404.html`：BusyBox 只在主配置 `/etc/httpd.conf` 中接受 `E404` 指令，`Dockerfile` 在配置阶段由 `httpd.conf` 生成该主配置；站点根目录的 `httpd.conf` 仍只负责 MIME 映射并禁止外部访问。
 
 ## CI：手动构建并发布 Release（.github/workflows/docker-release.yml）
 

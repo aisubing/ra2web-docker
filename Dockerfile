@@ -13,9 +13,10 @@
 # 上游新增的配置键也会自动带入（只覆盖覆盖层中出现的键）。
 FROM python:3.13-alpine AS config
 WORKDIR /src
-COPY config.json config-docker.json ./
+COPY config.json config-docker.json httpd.conf ./
 RUN python - <<'EOF'
 import json
+from pathlib import Path
 base = json.load(open('config.json'))
 over = json.load(open('config-docker.json'))
 def deep(b, o):
@@ -26,7 +27,13 @@ def deep(b, o):
             b[k] = v
 deep(base, over)
 json.dump(base, open('config.json', 'w'), ensure_ascii=False, indent=2)
+# BusyBox 只在主配置 /etc/httpd.conf 中接受 E404；站点根的 httpd.conf 仅作 MIME 映射。
+Path('httpd-main.conf').write_text(
+    Path('httpd.conf').read_text(encoding='utf-8').rstrip() + '\nE404:404.html\n',
+    encoding='utf-8',
+)
 print('config 覆盖层:', over if over else '(空，保持上游原样)')
+print('httpd 主配置: E404 -> 404.html')
 EOF
 
 FROM lipanski/docker-static-website:2.6.0
@@ -42,6 +49,8 @@ LABEL org.opencontainers.image.title="ra2web" \
 
 COPY . /home/static/
 COPY --from=config /src/config.json /home/static/config.json
+# 404 自定义页面：BusyBox 只在主配置中接受 E404，站点根的 httpd.conf 继续负责 MIME。
+COPY --from=config /src/httpd-main.conf /etc/httpd.conf
 
 EXPOSE 5157
 
