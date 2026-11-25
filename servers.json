@@ -2,9 +2,9 @@
   "regions": [
     {
       "id": "CHN2",
-      "label": "张三大区",
+      "label": "大中华区(GCHN)",
       "available": true,
-      "gameVersion": "0.87.1",
+      "gameVersion": "0.87",
       "wolUrl": "wss://wol.bj1.k0s.cn/wol",
       "apiRegUrl": "https://wol.bj1.k0s.cn/register",
       "clientIncidentUrl": "https://telemetry.bj1.wangerhuoda.cn/client-incidents",
@@ -13,17 +13,15 @@
       "mapTransferUrl": "https://wol.bj1.wangerhuoda.cn/map-transfer"
     },
     {
-      "id": "ENGGER",
-      "label": "English German Region",
+      "id": "ASIA",
+      "label": "东南北亚大区(SENA)",
       "available": true,
-      "gameVersion": "0.87.1",
-      "wolUrl": "wss://wol.flkf.k0s.cn/wol",
-      "webTransportWolUrl": "https://wol.flkf.k0s.cn/wol-webtransport",
-      "apiRegUrl": "https://wol.flkf.k0s.cn/register",
-      "clientIncidentUrl": "https://telemetry.bj1.k0s.cn/client-incidents",
-      "wladderUrl": "https://wol.flkf.k0s.cn/ladder",
-      "wgameresUrl": "https://wol.flkf.k0s.cn/wgameres",
-      "mapTransferUrl": "https://wol.flkf.k0s.cn/map-transfer"
+      "gameVersion": "0.87",
+      "wolUrl": "wss://wol.qiancaoyun.com/wol",
+      "apiRegUrl": "https://wol.qiancaoyun.com/register",
+      "wladderUrl": "https://wol.qiancaoyun.com/ladder",
+      "wgameresUrl": "https://wol.qiancaoyun.com/wgameres",
+      "mapTransferUrl": "https://wol.qiancaoyun.com/map-transfer"
     }
   ]
 }
