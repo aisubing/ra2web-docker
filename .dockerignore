@@ -1,6 +1,11 @@
 .git/
 .zcode/
 .github/
+.edgeone/
+local-docs/
+gameres/
+.env*
+.DS_Store
 .prettierrc.json
 .prettierignore
 Dockerfile
